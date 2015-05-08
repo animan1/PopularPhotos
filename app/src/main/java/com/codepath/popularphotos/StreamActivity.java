@@ -1,9 +1,10 @@
 package com.codepath.popularphotos;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 public class StreamActivity extends ActionBarActivity {
@@ -12,25 +13,17 @@ public class StreamActivity extends ActionBarActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_stream);
+    populatePhotos();
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    return true;
-  }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
-    int id = item.getItemId();
-
-    //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
-      return true;
-    }
-
-    return super.onOptionsItemSelected(item);
+  private void populatePhotos() {
+    Photo.fetchPopular(new PhotoResponseHandler() {
+      @Override
+      public void onSuccess(ArrayList<Photo> photos) {
+        PhotosAdapter photosAdapter = new PhotosAdapter(StreamActivity.this, photos);
+        ListView photosListView = (ListView)findViewById(R.id.photosListView);
+        photosListView.setAdapter(photosAdapter);
+      }
+    });
   }
 }
