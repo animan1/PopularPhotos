@@ -1,5 +1,6 @@
 package com.codepath.popularphotos;
 
+import android.util.Log;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import org.apache.http.Header;
@@ -45,6 +46,7 @@ public class Photo {
             photos.add(new Photo(caption, username, imageUrl));
           }
         } catch (JSONException e) {
+          Log.i(null, response.toString());
           throw new RuntimeException(e);
         }
         handler.onSuccess(photos);
