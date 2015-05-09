@@ -39,7 +39,11 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
     viewHolder.photoImageView.getLayoutParams().height = photo.imageHeight;
     viewHolder.photoImageView.setImageDrawable(null);
     Picasso.with(getContext()).load(photo.imageUrl).into(viewHolder.photoImageView);
-    viewHolder.photoTextView.setText(photo.username + " - " + photo.caption);
+    StringBuilder text = new StringBuilder(photo.username == null ? "Unknown" : photo.username);
+    if (photo.caption != null) {
+      text.append(" - ").append(photo.caption);
+    }
+    viewHolder.photoTextView.setText(text);
 
     return convertView;
   }
