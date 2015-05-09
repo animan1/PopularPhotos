@@ -16,11 +16,13 @@ public class Photo {
   String caption;
   String username;
   String imageUrl;
+  int imageHeight;
 
-  public Photo(String caption, String username, String imageUrl) {
+  public Photo(String caption, String username, String imageUrl, int imageHeight) {
     this.caption = caption;
     this.username = username;
     this.imageUrl = imageUrl;
+    this.imageHeight = imageHeight;
   }
 
   @Override
@@ -42,8 +44,10 @@ public class Photo {
             }
             String caption = dataObject.getJSONObject("caption").getString("text");
             String username = dataObject.getJSONObject("user").getString("username");
-            String imageUrl = dataObject.getJSONObject("images").getJSONObject("standard_resolution").getString("url");
-            photos.add(new Photo(caption, username, imageUrl));
+            JSONObject standardResolutionObject = dataObject.getJSONObject("images").getJSONObject("standard_resolution");
+            String imageUrl = standardResolutionObject.getString("url");
+            int imageHeight = standardResolutionObject.getInt("height");
+            photos.add(new Photo(caption, username, imageUrl, imageHeight));
           }
         } catch (JSONException e) {
           Log.i(null, response.toString());
