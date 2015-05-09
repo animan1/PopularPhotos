@@ -8,10 +8,17 @@
                 android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".StreamActivity">
 
-  <ListView
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:id="@+id/photosListView"
-      android:layout_alignParentTop="true"
-      android:layout_alignParentLeft="true"/>
+
+  <android.support.v4.widget.SwipeRefreshLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:id="@+id/photosSwipeContainer"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/photosListView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
+  </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
