@@ -1,12 +1,14 @@
 package com.codepath.popularphotos;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -39,11 +41,12 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
     viewHolder.photoImageView.getLayoutParams().height = photo.imageHeight;
     viewHolder.photoImageView.setImageDrawable(null);
     Picasso.with(getContext()).load(photo.imageUrl).into(viewHolder.photoImageView);
-    StringBuilder text = new StringBuilder(photo.username == null ? "Unknown" : photo.username);
-    if (photo.caption != null) {
-      text.append(" - ").append(photo.caption);
-    }
-    viewHolder.photoTextView.setText(text);
+
+    String username = photo.username == null ? "" : photo.username;
+    String caption = photo.caption == null ? "" : photo.caption;
+    String html = new StringBuilder("<b><font color=\"blue\">").append(username).append("</font></b> ").append(caption).toString();
+
+    viewHolder.photoTextView.setText(Html.fromHtml(html));
 
     return convertView;
   }
