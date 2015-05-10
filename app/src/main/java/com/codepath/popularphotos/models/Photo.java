@@ -19,11 +19,13 @@ public class Photo {
   public final User user;
   public final Image image;
   public final String caption;
+  public final long createdTimestamp;
 
-  public Photo(String caption, User user, Image image) {
+  public Photo(String caption, User user, Image image, long createdTimestamp) {
     this.caption = caption;
     this.image = image;
     this.user = user;
+    this.createdTimestamp = createdTimestamp;
   }
 
   @Override
@@ -52,7 +54,8 @@ public class Photo {
           User user = User.fromJSON(getObject(dataObject, "user"));
           JSONObject imageObject = getObject(getObject(dataObject, "images"), "standard_resolution");
           Image image = Image.fromJSON(imageObject);
-          photos.add(new Photo(caption, user, image));
+          long createdTimestamp = dataObject.optLong("created_time");
+          photos.add(new Photo(caption, user, image, createdTimestamp));
         }
         handler.onSuccess(photos);
       }

@@ -2,6 +2,7 @@ package com.codepath.popularphotos;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
   private static class ViewHolder {
     ImageView profileImageView;
     TextView usernameTextView;
+    TextView postTimeTextView;
     ImageView photoImageView;
     TextView captionTextView;
   }
@@ -38,6 +40,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
       viewHolder.usernameTextView = (TextView) convertView.findViewById(R.id.usernameTextView);
       viewHolder.photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
       viewHolder.captionTextView = (TextView) convertView.findViewById(R.id.captionTextView);
+      viewHolder.postTimeTextView = (TextView) convertView.findViewById(R.id.postTimeTextView);
       convertView.setTag(viewHolder);
     } else {
       viewHolder = (ViewHolder) convertView.getTag();
@@ -52,6 +55,12 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
 
     String username = photo.user.username == null ? "Unknown" : photo.user.username;
     viewHolder.usernameTextView.setText(username);
+
+    CharSequence relativeTime = DateUtils.getRelativeTimeSpanString(
+        photo.createdTimestamp * 1000,
+        System.currentTimeMillis(),
+        DateUtils.SECOND_IN_MILLIS);
+    viewHolder.postTimeTextView.setText(relativeTime);
 
     int scaledWidth = parent.getWidth();
     double scaledHeight = photo.image.height * scaledWidth;
