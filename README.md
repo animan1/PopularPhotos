@@ -12,6 +12,7 @@ Completed user stories:
  * [x] Advanced: Display each photo with the same style and proportions as the real Instagram
  * [x] Advanced: Display each user profile image using a RoundedImageView
  * [x] Advanced: Display a nice default placeholder graphic for each image during loading (read more about Picasso)
+ * [x] Advanced: Improve the user interface through styling and coloring
  
 Walkthrough of all user stories:
 
