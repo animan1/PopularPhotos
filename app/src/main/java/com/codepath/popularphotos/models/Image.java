@@ -8,15 +8,18 @@ import org.json.JSONObject;
 public class Image {
   public final String url;
   public final int height;
+  public final int width;
 
-  public Image(String url, int height) {
+  public Image(String url, int height, int width) {
     this.url = url;
     this.height = height;
+    this.width = width;
   }
 
   public static Image fromJSON(JSONObject imageObject) {
     String imageUrl = imageObject.optString("url");
     int imageHeight = imageObject.optInt("height");
-    return new Image(imageUrl, imageHeight);
+    int width = imageObject.optInt("width");
+    return new Image(imageUrl, imageHeight, width);
   }
 }

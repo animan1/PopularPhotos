@@ -53,8 +53,11 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
     String username = photo.user.username == null ? "Unknown" : photo.user.username;
     viewHolder.usernameTextView.setText(username);
 
-    viewHolder.photoImageView.getLayoutParams().height = photo.image.height;
-    viewHolder.photoImageView.setMinimumWidth(parent.getWidth());
+    int scaledWidth = parent.getWidth();
+    double scaledHeight = photo.image.height * scaledWidth;
+    scaledHeight /= photo.image.width;
+    viewHolder.photoImageView.getLayoutParams().height = (int)(scaledHeight);
+    viewHolder.photoImageView.getLayoutParams().width = scaledWidth;
     if (photo.image.url != null) {
       Picasso.with(getContext()).load(photo.image.url).placeholder(R.drawable.camera).into(viewHolder.photoImageView);
     }
