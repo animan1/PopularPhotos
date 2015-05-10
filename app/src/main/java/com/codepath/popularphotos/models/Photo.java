@@ -10,21 +10,19 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Photo {
-  public static interface ResponseHandler {
+  public interface ResponseHandler {
     void onSuccess(ArrayList<Photo> photos);
   }
 
   private static AsyncHttpClient client = new AsyncHttpClient();
 
   public final User user;
+  public final Image image;
   public final String caption;
-  public final String imageUrl;
-  public final int imageHeight;
 
-  public Photo(String caption, String imageUrl, int imageHeight, User user) {
+  public Photo(String caption, User user, Image image) {
     this.caption = caption;
-    this.imageUrl = imageUrl;
-    this.imageHeight = imageHeight;
+    this.image = image;
     this.user = user;
   }
 
@@ -43,6 +41,7 @@ public class Photo {
         JSONArray dataArray = response.optJSONArray("data");
         if (dataArray == null) {
           fetchPopular(handler);
+          return;
         }
         for (int index = 0; index < dataArray.length(); index++) {
           JSONObject dataObject = dataArray.optJSONObject(index);
@@ -51,10 +50,9 @@ public class Photo {
           }
           String caption = getObject(dataObject, "caption").optString("text");
           User user = User.fromJSON(getObject(dataObject, "user"));
-          JSONObject standardResolutionObject = getObject(getObject(dataObject, "images"), "standard_resolution");
-          String imageUrl = standardResolutionObject.optString("url");
-          int imageHeight = standardResolutionObject.optInt("height");
-          photos.add(new Photo(caption, imageUrl, imageHeight, user));
+          JSONObject imageObject = getObject(getObject(dataObject, "images"), "standard_resolution");
+          Image image = Image.fromJSON(imageObject);
+          photos.add(new Photo(caption, user, image));
         }
         handler.onSuccess(photos);
       }
