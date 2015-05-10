@@ -49,8 +49,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
 
     viewHolder.photoImageView.getLayoutParams().height = photo.imageHeight;
     viewHolder.photoImageView.setMinimumWidth(parent.getWidth());
-    viewHolder.photoImageView.setImageDrawable(null);
-    Picasso.with(getContext()).load(photo.imageUrl).into(viewHolder.photoImageView);
+    Picasso.with(getContext()).load(photo.imageUrl).placeholder(R.drawable.camera).into(viewHolder.photoImageView);
 
     String caption = photo.caption == null ? "" : photo.caption;
     viewHolder.captionTextView.setText(caption);
