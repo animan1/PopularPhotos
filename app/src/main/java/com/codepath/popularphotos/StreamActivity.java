@@ -3,8 +3,9 @@ package com.codepath.popularphotos;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 import android.widget.ListView;
+
+import com.codepath.popularphotos.models.Photo;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class StreamActivity extends ActionBarActivity {
 
     @Override
     public void onRefresh() {
-      Photo.fetchPopular(new PhotoResponseHandler() {
+      Photo.fetchPopular(new Photo.ResponseHandler() {
         @Override
         public void onSuccess(ArrayList<Photo> photos) {
           PhotosAdapter photosAdapter = new PhotosAdapter(StreamActivity.this, photos);
