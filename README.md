@@ -2,7 +2,7 @@
 
 This is an Android application for displaying the latest popular photos using the Instagram API.
 
-Time spent: 2 hours spent in total
+Time spent: 10 hours spent in total
 
 Completed user stories:
 
