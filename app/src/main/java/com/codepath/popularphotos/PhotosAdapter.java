@@ -15,7 +15,7 @@ import java.util.List;
 
 public class PhotosAdapter extends ArrayAdapter<Photo> {
   private static class ViewHolder {
-    RoundedImageView profileImageView;
+    ImageView profileImageView;
     TextView usernameTextView;
     ImageView photoImageView;
     TextView captionTextView;
@@ -33,7 +33,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
       viewHolder = new ViewHolder();
       LayoutInflater inflater = LayoutInflater.from(getContext());
       convertView = inflater.inflate(R.layout.photo_list_item, parent, false);
-      viewHolder.profileImageView = (RoundedImageView) convertView.findViewById(R.id.profileImageView);
+      viewHolder.profileImageView = (ImageView) convertView.findViewById(R.id.profileImageView);
       viewHolder.usernameTextView = (TextView) convertView.findViewById(R.id.usernameTextView);
       viewHolder.photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
       viewHolder.captionTextView = (TextView) convertView.findViewById(R.id.captionTextView);
@@ -42,8 +42,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
       viewHolder = (ViewHolder) convertView.getTag();
     }
 
-    viewHolder.profileImageView.setImageDrawable(null);
-    Picasso.with(getContext()).load(photo.profileImageUrl).into(viewHolder.profileImageView);
+    Picasso.with(getContext()).load(photo.profileImageUrl).placeholder(R.drawable.user).into(viewHolder.profileImageView);
 
     String username = photo.username == null ? "Unknown" : photo.username;
     viewHolder.usernameTextView.setText(username);
