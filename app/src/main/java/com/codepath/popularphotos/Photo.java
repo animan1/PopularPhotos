@@ -16,13 +16,15 @@ public class Photo {
   String caption;
   String username;
   String imageUrl;
+  String profileImageUrl;
   int imageHeight;
 
-  public Photo(String caption, String username, String imageUrl, int imageHeight) {
+  public Photo(String caption, String username, String imageUrl, int imageHeight, String profileImageUrl) {
     this.caption = caption;
     this.username = username;
     this.imageUrl = imageUrl;
     this.imageHeight = imageHeight;
+    this.profileImageUrl = profileImageUrl;
   }
 
   @Override
@@ -48,11 +50,13 @@ public class Photo {
               continue;
             }
             String caption = getObject(dataObject, "caption").optString("text");
-            String username = getObject(dataObject, "user").optString("username");
+            JSONObject userObject = getObject(dataObject, "user");
+            String username = userObject.optString("username");
+            String profileImageUrl = userObject.getString("profile_picture");
             JSONObject standardResolutionObject = getObject(getObject(dataObject, "images"), "standard_resolution");
             String imageUrl = standardResolutionObject.optString("url");
             int imageHeight = standardResolutionObject.optInt("height");
-            photos.add(new Photo(caption, username, imageUrl, imageHeight));
+            photos.add(new Photo(caption, username, imageUrl, imageHeight, profileImageUrl));
           }
         } catch (JSONException e) {
           Log.i(null, response.toString());
