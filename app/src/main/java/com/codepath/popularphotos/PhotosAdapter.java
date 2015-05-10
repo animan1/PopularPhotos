@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.codepath.popularphotos.models.Photo;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 public class PhotosAdapter extends ArrayAdapter<Photo> {
@@ -22,6 +23,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
     TextView postTimeTextView;
     ImageView photoImageView;
     TextView captionTextView;
+    TextView likeTextView;
   }
 
   public PhotosAdapter(Context context, List<Photo> objects) {
@@ -41,6 +43,7 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
       viewHolder.photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
       viewHolder.captionTextView = (TextView) convertView.findViewById(R.id.captionTextView);
       viewHolder.postTimeTextView = (TextView) convertView.findViewById(R.id.postTimeTextView);
+      viewHolder.likeTextView = (TextView) convertView.findViewById(R.id.likeTextView);
       convertView.setTag(viewHolder);
     } else {
       viewHolder = (ViewHolder) convertView.getTag();
@@ -76,6 +79,10 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
 
     String caption = photo.caption == null ? "" : photo.caption;
     viewHolder.captionTextView.setText(caption);
+
+    String likeCount = NumberFormat.getInstance().format(photo.likeCount);
+    String likeText = new StringBuilder("\u2665 ").append(likeCount).append(" likes").toString();
+    viewHolder.likeTextView.setText(likeText);
 
     return convertView;
   }

@@ -20,12 +20,14 @@ public class Photo {
   public final Image image;
   public final String caption;
   public final long createdTimestamp;
+  public final int likeCount;
 
-  public Photo(String caption, User user, Image image, long createdTimestamp) {
+  public Photo(String caption, User user, Image image, long createdTimestamp, int likeCount) {
     this.caption = caption;
     this.image = image;
     this.user = user;
     this.createdTimestamp = createdTimestamp;
+    this.likeCount = likeCount;
   }
 
   @Override
@@ -55,7 +57,8 @@ public class Photo {
           JSONObject imageObject = getObject(getObject(dataObject, "images"), "standard_resolution");
           Image image = Image.fromJSON(imageObject);
           long createdTimestamp = dataObject.optLong("created_time");
-          photos.add(new Photo(caption, user, image, createdTimestamp));
+          int likeCount = getObject(dataObject, "likes").optInt("count");
+          photos.add(new Photo(caption, user, image, createdTimestamp, likeCount));
         }
         handler.onSuccess(photos);
       }
